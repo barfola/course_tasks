@@ -1,13 +1,11 @@
-def encrypted_image(file_path):
-    with open('try.jpg', 'rb') as file:
+def get_encrypted_file(file_path, encryption_key=5):
+    with open(file_path, 'rb') as file:
         binary_data = bytearray(file.read())
-        print(binary_data[0] ^ 1)
-        n = binary_data[0] ^ 1
-        byte_ob = n.to_bytes(1, byteorder='big')
-        print(byte_ob)
-    with open('picture_en.jpg', 'wb') as encrypted_pic:
-        encrypted_pic.write(byte_ob)
+
+    encrypted_binary_data = bytearray(byte ^ encryption_key for byte in binary_data)
+
+    with open(file_path, 'wb') as encrypted_file:
+        encrypted_file.write(encrypted_binary_data)
 
 
-encrypted_image('s')
-
+get_encrypted_file('pic.jpg', 5)
