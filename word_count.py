@@ -1,4 +1,6 @@
 import re
+import sys
+import os
 
 
 def is_string_contain_only_english_letters(string):
@@ -74,4 +76,53 @@ def print_n_words_with_most_appearances(n, words_dict):
         print(f'{place}. [{key_and_value_tuple[0]}] with {key_and_value_tuple[1]} appearances.')
 
 
+def get_parameters():
+    is_length_ok = True
+    filename = None
+    n = None
 
+    if len(sys.argv) != 3:
+        is_length_ok = False
+
+    else:
+        filename = sys.argv[1]
+        n = sys.argv[2]
+
+    return is_length_ok, filename, n
+
+
+def are_parameters_valid(filename, n):
+    try:
+        int(n)
+
+    except ValueError:
+        return False
+
+    except TypeError:
+        return False
+
+    try:
+        if not os.path.isfile(filename):
+            return False
+
+    except TypeError:
+        return False
+
+    return True
+
+
+def main():
+    is_length_ok, filename, n = get_parameters()
+    parameters_valid = are_parameters_valid(filename, n)
+    if not is_length_ok or not parameters_valid:
+        print('Insert parameters like this : file name  N(number).')
+        print('Pay attention that the file exist, and N is number.')
+        print('Try again.')
+
+    else:
+        words_dict = get_words_dict(filename)
+        print_n_words_with_most_appearances(int(n), words_dict)
+
+
+if __name__ == '__main__':
+    main()
